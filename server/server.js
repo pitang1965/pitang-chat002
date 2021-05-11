@@ -55,6 +55,9 @@ const resolvers = {
 
 const pubsub = new PubSub();
 const server = new GraphQLServer({ typeDefs, resolvers, context: { pubsub } });
+
+const port = process.env.PORT || 4000;
+
 server.start(({ port }) => {
-  console.log(`Server on http://localhost:${port}/`);
+  console.log(`Server is up on port ${port}/`);
 });

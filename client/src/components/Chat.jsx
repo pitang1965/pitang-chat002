@@ -18,7 +18,7 @@ const link = new WebSocketLink({
 
 const client = new ApolloClient({
   link,
-  uri: 'http://localhost:4000/',
+  uri: `http://localhost:4000/`,
   cache: new InMemoryCache(),
 });
 
