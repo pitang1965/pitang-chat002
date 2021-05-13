@@ -9,8 +9,12 @@ import {
 } from '@apollo/client';
 import { WebSocketLink } from '@apollo/client/link/ws';
 
+console.table(`window.location.href: ${window.location.href}`);
+const uri = window.location.href.includes('localhost') ? `ws://localhost:4000` : `ws://pitang1965-chat-server.herokuapp.com/`;
+console.log(`Server location: ${uri}`);
+
 const link = new WebSocketLink({
-  uri: `ws://localhost:4000`,
+  uri: uri,
   options: {
     reconnect: true,
   },
@@ -19,6 +23,7 @@ const link = new WebSocketLink({
 const client = new ApolloClient({
   link,
   uri: `http://localhost:4000/`,
+  // uri: `https://pitang1965-chat-server.herokuapp.com/`,
   cache: new InMemoryCache(),
 });
 
@@ -33,7 +38,7 @@ const GET_MESSAGES = gql`
 `;
 
 const POST_MESSAGE = gql`
-  mutation($user: String!, $content: String!) {
+  mutation ($user: String!, $content: String!) {
     postMessage(user: $user, content: $content)
   }
 `;
@@ -45,15 +50,16 @@ const Messages = ({ user }) => {
   }
 
   return (
-    <div className='flex flex-col flex-nowrap bg-primary p-10'>
+    <div className='flex flex-col p-10 flex-nowrap bg-primary'>
       {data.messages.map(({ id, user: messageUser, content }) => (
         <div
+          key={id}
           className={`flex pb-3 ${
             user === messageUser ? 'justify-end' : 'justify-start'
           }`}
         >
           {
-            <div className='leading-16 h-16 w-16 rounded-full text-center text-2xl mr-4 border-2 border-solid border-gray-300'>
+            <div className='w-16 h-16 mr-4 text-2xl text-center border-2 border-gray-300 border-solid rounded-full leading-16'>
               {messageUser.slice(0, 2).toUpperCase()}
             </div>
           }
@@ -89,9 +95,9 @@ const Chat = () => {
     'm-2 py-2 px-4 border-solid border-2 border-light-blue-500 rounded';
 
   return (
-    <div className='flex flex-col flex-wrap  relative h-full'>
-      <Messages user={state.user} className="h-full" />
-      <form onSubmit={onSubmit} className="absolute bottom-0 lg:h-15" >
+    <div className='relative flex flex-col flex-wrap h-full'>
+      <Messages user={state.user} className='h-full' />
+      <form onSubmit={onSubmit} className='absolute bottom-0 lg:h-15'>
         <input
           type='text'
           placeholder='ユーザー名'
@@ -104,7 +110,7 @@ const Chat = () => {
           onChange={(evt) => setState({ ...state, content: evt.target.value })}
           className={textBoxStyle}
         />
-        <button className='font-bold m-2 py-2 px-4 rounded text-white bg-green-500 hover:bg-green-400'>
+        <button className='px-4 py-2 m-2 font-bold text-white bg-green-500 rounded hover:bg-green-400'>
           送信
         </button>
       </form>

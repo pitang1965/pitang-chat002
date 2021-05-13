@@ -4,7 +4,7 @@ import { Footer } from './Footer';
 
 export const Layout = ({ children }) => {
   return (
-    <div className='container flex flex-col flex-nowrap mx-auto w-auto h-screen'>
+    <div className='container flex flex-col w-auto h-screen mx-auto flex-nowrap'>
       <Header />
       <div className='h-screen bg-primary'>{children}</div>
       <Footer />

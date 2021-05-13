@@ -1,5 +1,5 @@
 import React from 'react';
 
 export const Header = () => {
-  return <header className='flex bg-green-300 h-8 text-xl justify-center'>ピータンチャット</header>;
+  return <header className='flex justify-center h-8 text-xl bg-green-300'>ピータンチャット</header>;
 };
