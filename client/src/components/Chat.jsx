@@ -22,8 +22,7 @@ const link = new WebSocketLink({
 
 const client = new ApolloClient({
   link,
-  uri: `http://localhost:4000/`,
-  // uri: `https://pitang1965-chat-server.herokuapp.com/`,
+  uri: uri,
   cache: new InMemoryCache(),
 });
 
