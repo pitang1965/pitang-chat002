@@ -10,7 +10,7 @@ import {
 import { WebSocketLink } from '@apollo/client/link/ws';
 
 console.log(`window.location.href: ${window.location.href}`);
-const webSocketUrl = window.location.href.includes('localhost') ? `ws://localhost:4000` : `ws://pitang1965-chat-server.herokuapp.com/`;
+const webSocketUrl = window.location.href.includes('localhost') ? `ws://localhost:4000` : `wss://pitang1965-chat-server.herokuapp.com/`;
 const graphQlUrl = window.location.href.includes('localhost') ? `http://localhost:4000` : `https://pitang1965-chat-server.herokuapp.com/`;
 console.log(`Server location: ${graphQlUrl}`);
 
