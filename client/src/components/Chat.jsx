@@ -9,12 +9,13 @@ import {
 } from '@apollo/client';
 import { WebSocketLink } from '@apollo/client/link/ws';
 
-console.table(`window.location.href: ${window.location.href}`);
-const uri = window.location.href.includes('localhost') ? `ws://localhost:4000` : `ws://pitang1965-chat-server.herokuapp.com/`;
-console.log(`Server location: ${uri}`);
+console.log(`window.location.href: ${window.location.href}`);
+const webSocketUrl = window.location.href.includes('localhost') ? `ws://localhost:4000` : `ws://pitang1965-chat-server.herokuapp.com/`;
+const graphQlUrl = window.location.href.includes('localhost') ? `http://localhost:4000` : `https://pitang1965-chat-server.herokuapp.com/`;
+console.log(`Server location: ${graphQlUrl}`);
 
 const link = new WebSocketLink({
-  uri: uri,
+  uri: webSocketUrl,
   options: {
     reconnect: true,
   },
@@ -22,7 +23,7 @@ const link = new WebSocketLink({
 
 const client = new ApolloClient({
   link,
-  uri: uri,
+  uri: graphQlUrl,
   cache: new InMemoryCache(),
 });
 
