@@ -4,7 +4,6 @@
   "description": "* React, GraphQL及びWebsocketsを用いたチャットアプリです。",
   "main": "home-page/index.js",
   "scripts": {
-    "start": "npm start --prefix server",
     "server": "npm start --prefix server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
@@ -23,5 +22,6 @@
   "devDependencies": {
     "concurrently": "^6.1.0",
     "webpack-merge": "^5.7.3"
-  }
+  },
+  "dependencies": {}
 }
