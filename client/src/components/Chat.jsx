@@ -8,6 +8,7 @@ import {
   gql,
 } from '@apollo/client';
 import { WebSocketLink } from '@apollo/client/link/ws';
+import Spinner  from './Spinner';
 
 console.log(`window.location.href: ${window.location.href}`);
 const webSocketUrl = window.location.href.includes('localhost')
@@ -50,7 +51,7 @@ const POST_MESSAGE = gql`
 const Messages = ({ user }) => {
   const { data } = useSubscription(GET_MESSAGES);
   if (!data) {
-    return null;
+    return <Spinner />;
   }
 
   return (

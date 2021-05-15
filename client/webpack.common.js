@@ -26,6 +26,12 @@ module.exports = {
           loader: 'babel-loader',
         },
       },
+      {
+        // 対象となるファイルの拡張子
+        test: /\.(gif|png|jpg|svg)$/,
+        // 画像をBase64として取り込む
+        type: "asset/inline",
+      }
     ],
   },
 
