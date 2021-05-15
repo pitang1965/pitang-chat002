@@ -101,14 +101,17 @@ const Chat = () => {
 
   return (
     <div className='relative flex flex-col flex-wrap h-full'>
-      <Messages user={state.user} className='h-full' />
-      <form onSubmit={onSubmit} className='absolute bottom-0 lg:h-15'>
+      <Messages user={state.user} className='w-full' />
+      <form
+        onSubmit={onSubmit}
+        className='absolute bottom-0 flex flex-row w-full lg:h-15 flex-nowrap'
+      >
         <input
           type='text'
           placeholder='ユーザー名'
           value={state.user}
           onChange={(evt) => setState({ ...state, user: evt.target.value })}
-          className={textBoxStyle}
+          className={textBoxStyle + ' flex-none w-32'}
         />
         <input
           id='message-input'
@@ -116,9 +119,9 @@ const Chat = () => {
           placeholder='メッセージ入力'
           value={state.content}
           onChange={(evt) => setState({ ...state, content: evt.target.value })}
-          className={textBoxStyle}
+          className={textBoxStyle + ' flex-grow'}
         />
-        <button className='px-4 py-2 m-2 font-bold text-white bg-green-500 rounded hover:bg-green-400'>
+        <button className='flex-none px-4 py-2 m-2 text-white bg-green-500 rounded w-4font-bold hover:bg-green-400'>
           送信
         </button>
       </form>
