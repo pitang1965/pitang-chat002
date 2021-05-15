@@ -10,8 +10,12 @@ import {
 import { WebSocketLink } from '@apollo/client/link/ws';
 
 console.log(`window.location.href: ${window.location.href}`);
-const webSocketUrl = window.location.href.includes('localhost') ? `ws://localhost:4000` : `wss://pitang1965-chat-server.herokuapp.com/`;
-const graphQlUrl = window.location.href.includes('localhost') ? `http://localhost:4000` : `https://pitang1965-chat-server.herokuapp.com/`;
+const webSocketUrl = window.location.href.includes('localhost')
+  ? `ws://localhost:4000`
+  : `wss://pitang1965-chat-server.herokuapp.com/`;
+const graphQlUrl = window.location.href.includes('localhost')
+  ? `http://localhost:4000`
+  : `https://pitang1965-chat-server.herokuapp.com/`;
 console.log(`Server location: ${graphQlUrl}`);
 
 const link = new WebSocketLink({
@@ -85,6 +89,7 @@ const Chat = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
     if (state.content.length > 0) {
       postMessage({ variables: state });
     }
@@ -101,12 +106,15 @@ const Chat = () => {
         <input
           type='text'
           placeholder='ユーザー名'
+          value={state.user}
           onChange={(evt) => setState({ ...state, user: evt.target.value })}
           className={textBoxStyle}
         />
         <input
+          id='message-input'
           type='text'
-          placeholder='送信内容'
+          placeholder='メッセージ入力'
+          value={state.content}
           onChange={(evt) => setState({ ...state, content: evt.target.value })}
           className={textBoxStyle}
         />
