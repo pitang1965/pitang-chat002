@@ -8,7 +8,10 @@ import {
   gql,
 } from '@apollo/client';
 import { WebSocketLink } from '@apollo/client/link/ws';
-import Spinner  from './Spinner';
+import Spinner from './Spinner';
+
+const startTime = Date.now();
+const showTime = (string) => console.log(string, Date.now() - startTime);
 
 console.log(`window.location.href: ${window.location.href}`);
 const webSocketUrl = window.location.href.includes('localhost')
@@ -19,12 +22,16 @@ const graphQlUrl = window.location.href.includes('localhost')
   : `https://pitang1965-chat-server.herokuapp.com/`;
 console.log(`Server location: ${graphQlUrl}`);
 
+showTime('before new WebSocketLink');
+
 const link = new WebSocketLink({
   uri: webSocketUrl,
   options: {
     reconnect: true,
   },
 });
+
+showTime('before new ApolloClient');
 
 const client = new ApolloClient({
   link,
@@ -49,10 +56,14 @@ const POST_MESSAGE = gql`
 `;
 
 const Messages = ({ user }) => {
+  showTime('Messages #1');
+  
   const { data } = useSubscription(GET_MESSAGES);
   if (!data) {
     return <Spinner />;
   }
+
+  showTime('Messages #2');
 
   return (
     <div className='flex flex-col p-10 flex-nowrap bg-primary'>
@@ -83,7 +94,7 @@ const Messages = ({ user }) => {
 
 const Chat = () => {
   const [state, setState] = useState({
-    user: 'ピータン',
+    user: '',
     content: '',
   });
   const [postMessage] = useMutation(POST_MESSAGE);
