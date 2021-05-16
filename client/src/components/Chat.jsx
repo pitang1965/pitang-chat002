@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   ApolloClient,
   InMemoryCache,
@@ -11,7 +11,8 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 import Spinner from './Spinner';
 
 const startTime = Date.now();
-const showTime = (string) => console.log(string, Date.now() - startTime);
+const showTime = (string) =>
+  console.log(`${string}: ${Date.now() - startTime} [msec]`);
 
 console.log(`window.location.href: ${window.location.href}`);
 const webSocketUrl = window.location.href.includes('localhost')
@@ -30,8 +31,6 @@ const link = new WebSocketLink({
     reconnect: true,
   },
 });
-
-showTime('before new ApolloClient');
 
 const client = new ApolloClient({
   link,
@@ -55,15 +54,16 @@ const POST_MESSAGE = gql`
   }
 `;
 
-const Messages = ({ user }) => {
-  showTime('Messages #1');
-  
+const Messages = ({ user, onChage }) => {
   const { data } = useSubscription(GET_MESSAGES);
+
   if (!data) {
     return <Spinner />;
+  } else {
+    onChage();
   }
 
-  showTime('Messages #2');
+  showTime('after useSubscription()');
 
   return (
     <div className='flex flex-col p-10 flex-nowrap bg-primary'>
@@ -93,6 +93,7 @@ const Messages = ({ user }) => {
 };
 
 const Chat = () => {
+  // チャットメッセージの送信
   const [state, setState] = useState({
     user: '',
     content: '',
@@ -108,12 +109,20 @@ const Chat = () => {
     setState({ ...state, content: '' });
   };
 
+  // オートスクロール
+  const messageInput = useRef(null);
+  
+  const autoScroll = () => {
+    messageInput.current.scrollIntoView();
+  };
+
+  // テキストボックスのスタイル
   const textBoxStyle =
     'm-2 py-2 px-4 border-solid border-2 border-light-blue-500 rounded';
 
   return (
     <div className='relative flex flex-col flex-wrap h-full'>
-      <Messages user={state.user} className='w-full' />
+      <Messages user={state.user} className='w-full' onChage={autoScroll} />
       <form
         onSubmit={onSubmit}
         className='absolute bottom-0 flex flex-row w-full lg:h-15 flex-nowrap'
@@ -128,6 +137,7 @@ const Chat = () => {
         <input
           id='message-input'
           type='text'
+          ref={messageInput}
           placeholder='メッセージ入力'
           value={state.content}
           onChange={(evt) => setState({ ...state, content: evt.target.value })}
