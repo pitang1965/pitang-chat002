@@ -107,6 +107,8 @@ const Chat = () => {
       postMessage({ variables: state });
     }
     setState({ ...state, content: '' });
+
+    messageInput.current.focus();
   };
 
   // オートスクロール
