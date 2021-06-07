@@ -4,9 +4,12 @@ import { Footer } from './Footer';
 
 export const Layout = ({ children }) => {
   return (
-    <div className='container flex flex-col w-auto h-screen mx-auto flex-nowrap'>
+    <div
+      className='container grid w-full h-screen mx-auto overscroll-none'
+      style={{ gridTemplateRows: 'auto 1fr auto' }}
+    >
       <Header />
-      <div className='h-screen bg-primary'>{children}</div>
+      {children}
       <Footer />
     </div>
   );

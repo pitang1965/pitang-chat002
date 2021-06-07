@@ -6,7 +6,3 @@ body {
 
 @tailwind components;
 @tailwind utilities;
-
-.message-other-settings {
-  max-width: 40%;
-}

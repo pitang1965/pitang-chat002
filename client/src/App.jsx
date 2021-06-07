@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import './index.css';
 import Chat from './components/Chat';
 import { Layout } from './components/Layout';
 

@@ -66,7 +66,7 @@ const Messages = ({ user, onChage }) => {
   showTime('after useSubscription()');
 
   return (
-    <div className='flex flex-col p-10 flex-nowrap bg-primary'>
+    <div className='flex flex-col p-10 overflow-y-scroll flex-nowrap bg-primary'>
       {data.messages.map(({ id, user: messageUser, content }) => (
         <div
           key={id}
@@ -82,7 +82,8 @@ const Messages = ({ user, onChage }) => {
           <div
             className={`${
               user === messageUser ? 'bg-green-300' : 'bg-white'
-            } text-gray-800 p-2 rounded-2xl message-other-settings`}
+            } text-gray-800 p-2 rounded-2xl`}
+            style={{ maxWidth: '40%' }}
           >
             {content}
           </div>
@@ -113,21 +114,27 @@ const Chat = () => {
 
   // オートスクロール
   const messageInput = useRef(null);
-  
+
   const autoScroll = () => {
     messageInput.current.scrollIntoView();
   };
 
   // テキストボックスのスタイル
-  const textBoxStyle =
-    'm-2 py-2 px-4 border-solid border-2 border-light-blue-500 rounded';
+  const textBoxStyle = 'm-2 py-2 px-4 border-solid border-2 rounded';
 
   return (
-    <div className='relative flex flex-col flex-wrap h-full'>
-      <Messages user={state.user} className='w-full' onChage={autoScroll} />
+    <div
+      className='grid overflow-y-hidden'
+      style={{ gridTemplateRows: '1fr auto' }}
+    >
+      <Messages
+        user={state.user}
+        onChage={autoScroll}
+        className='flex-shrink'
+      />
       <form
         onSubmit={onSubmit}
-        className='absolute bottom-0 flex flex-row w-full lg:h-15 flex-nowrap'
+        className='flex flex-row flex-grow-0 gap-x-2 flex-nowrap bg-primary opacity-80'
       >
         <input
           type='text'
@@ -145,7 +152,7 @@ const Chat = () => {
           onChange={(evt) => setState({ ...state, content: evt.target.value })}
           className={textBoxStyle + ' flex-grow'}
         />
-        <button className='flex-none px-4 py-2 m-2 text-white bg-green-500 rounded w-4font-bold hover:bg-green-400'>
+        <button className='flex-none px-4 py-2 m-2 font-bold text-white bg-green-500 rounded hover:bg-green-400'>
           送信
         </button>
       </form>
