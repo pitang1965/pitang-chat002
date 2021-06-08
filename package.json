@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/pitang1965/pitang-chat002#readme",
   "devDependencies": {
-    "concurrently": "^6.1.0",
-    "webpack-merge": "^5.7.3"
+    "concurrently": "^6.2.0",
+    "webpack-merge": "^5.8.0"
   },
   "dependencies": {}
 }
