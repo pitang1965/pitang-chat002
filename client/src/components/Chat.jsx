@@ -8,6 +8,7 @@ import {
   gql,
 } from '@apollo/client';
 import { WebSocketLink } from '@apollo/client/link/ws';
+import ReactTooltip from 'react-tooltip';
 import Spinner from './Spinner';
 
 const startTime = Date.now();
@@ -75,7 +76,11 @@ const Messages = ({ user, onChage }) => {
           }`}
         >
           {
-            <div className='w-16 h-16 mr-4 text-2xl text-center border-2 border-gray-300 border-solid rounded-full leading-16'>
+            <div
+              className='w-16 h-16 mr-4 text-2xl text-center border-2 border-gray-300 border-solid rounded-full leading-16'
+              data-tip='そんほんす'
+              data-for='user-name'
+            >
               {messageUser.slice(0, 2).toUpperCase()}
             </div>
           }
@@ -87,6 +92,7 @@ const Messages = ({ user, onChage }) => {
           >
             {content}
           </div>
+          <ReactTooltip id='user-name' />
         </div>
       ))}
     </div>
