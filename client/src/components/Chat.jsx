@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   ApolloClient,
   InMemoryCache,
@@ -78,7 +78,7 @@ const Messages = ({ user, onChage }) => {
           {
             <div
               className='w-16 h-16 mr-4 text-2xl text-center border-2 border-gray-300 border-solid rounded-full leading-16'
-              data-tip='そんほんす'
+              data-tip={messageUser}
               data-for='user-name'
             >
               {messageUser.slice(0, 2).toUpperCase()}
